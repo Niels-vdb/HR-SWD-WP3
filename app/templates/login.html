@@ -1,0 +1,22 @@
+{% extends 'base.html' %} {% block content %}
+<form method="POST" class="login-form">
+  <div class="container screen login-screen">
+    {{ form.hidden_tag() }}
+
+    <div class="login-container">
+      <h1 class="loging-header">Inloggen</h1>
+      <div>
+        <strong class="strong-normal">{{ form.id.label }}</strong>
+        {{ form.id(class="form-control login-input") }}
+        <strong class="strong-normal">{{ form.password.label }}</strong>
+        {{ form.password(class="form-control login-input") }}
+        <div class="login-btn-container">
+          {{ form.submit(class="btn btn-danger login-btn") }}
+          <a href="{{ url_for('request_password') }}" class="forgot-password-btn">Wachtwoord vergeten?</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock %}

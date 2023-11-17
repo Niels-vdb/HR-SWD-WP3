@@ -1,0 +1,69 @@
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <img
+      src="{{ url_for('static', filename='/img/logo-hr.svg') }}"
+      alt="Hogeschool Rotterdam"
+      width="50px"
+    />
+    {% if session['teacher_email'] %}
+    <button
+      class="navbar-toggler"
+      id="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbar"
+      aria-controls="navbar"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    {% endif %} {% if current_user.is_authenticated %}
+    <div class="collapse navbar-collapse nav-items" id="navbar">
+      <div class="navbar-nav" id="navbar-nav-1">
+        <a
+          class="nav-link active"
+          aria-current="page"
+          href="{{ url_for('teacher_menu') }}"
+          >Menu</a
+        >
+      </div>
+      <div class="navbar-nav" id="navbar-nav-2">
+        <a
+          class="nav-link active"
+          aria-current="page"
+          href="{{ url_for('make_meeting_screen') }}"
+          >Nieuwe bijeenkomst aanmaken</a
+        >
+      </div>
+      <div class="navbar-nav" id="navbar-nav-3">
+        <a
+          class="nav-link active"
+          aria-current="page"
+          href="{{ url_for('teacher_meeting_history') }}"
+          >Oude bijeenkomsten bekijken</a
+        >
+      </div>
+      <div class="navbar-nav" id="navbar-nav-4">
+        <a
+          class="nav-link active"
+          aria-current="page"
+          href="{{ url_for('student_search') }}"
+          >Leerlingen bekijken</a
+        >
+      </div>
+      {% if session["teacher_admin"] %}
+      <div class="navbar-nav" id="navbar-nav-5">
+        <a
+          class="nav-link active"
+          aria-current="page"
+          href="{{ url_for('manage_account') }}"
+          >Leerlingen bijwerken en aanmaken</a
+        >
+      </div>
+      {% endif %}
+    </div>
+    <a class="nav-link logoff-btn" href="{{url_for('logout')}}">Logout</a>
+    {% endif %}
+  </div>
+</nav>

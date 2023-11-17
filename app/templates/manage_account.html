@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="pt-3 pb-5">
+    <div class="container">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#student-tab_wrapper" type="button" role="tab" aria-controls="home" aria-selected="true">Student</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="classes_information-tab" data-bs-toggle="tab" data-bs-target="#classes-tab_wrapper" type="button" role="tab" aria-controls="classes_information_wrapper" aria-selected="false">Klassen</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="creation-tab" data-bs-toggle="tab" data-bs-target="#creation_wrapper" type="button" role="tab" aria-controls="creation_wrapper" aria-selected="false"><i class="bi bi-pencil-square"></i></button>
+            </li>
+        </ul>
+        <div class="tab-content p-3 bg-white border border-top-0 rounded-bottom" id="myTabContent">
+            <div class="tab-pane fade show active" id="student-tab_wrapper" role="tabpanel" aria-labelledby="student-tab">
+                <div class="row">
+                    <div class="col-auto">
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1">Studentnummer</span>
+                            <input id="student_number_field" type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                            <button class="btn btn-outline-primary" onclick="set_ui_for_person_information()">Zoek <i class="bi bi-rocket-takeoff-fill"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row row-cols-1 gy-2" id="student_information_wrapper">
+                </div>
+            </div>
+            <div class="tab-pane fade" id="classes-tab_wrapper" role="tabpanel" aria-labelledby="classes-tab">
+                <div class="row" id="classes_information_wrapper">
+                    <div class="col-auto">
+                        <select class="form-select" onchange="this.parentElement.parentElement.insertAdjacentHTML('beforeend', `<div class='col-auto'>${all_classes_of_study_select_html_generator(this.value, '', 'generate_table_of_chosen_class(this)')}</div>`)">
+                            <option>Kies een studie...</option>
+                            {% for study in studies %}
+                                <option value="{{ study.studyId }}">{{ study.studyId }} - {{ study.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="creation_wrapper" role="tabpanel" aria-labelledby="creation-tab">
+                <div class="row">
+                    <div class="col">
+                        <ul class="nav nav-tabs border-0 mb-2" id="myTab" role="tablist">
+                          <li class="nav-item" role="presentation">
+                            <button class="btn btn-outline-primary" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Student</button>
+                          </li>
+                          <li class="nav-item ms-2" role="presentation">
+                            <button class="btn btn-outline-primary" id="teacher-tab" data-bs-toggle="tab" data-bs-target="#teacher" type="button" role="tab" aria-controls="profile" aria-selected="false">Leraar</button>
+                          </li>
+                          <li class="nav-item ms-2" role="presentation">
+                            <button class="btn btn-outline-primary" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Klas</button>
+                          </li>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="row row-cols-1">
+                                    <div class="col-auto">
+                                        <label for="exampleInputEmail1" class="form-label badge text-bg-primary">Studentnummer</label>
+                                        <input id="new_student_studentnumber" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    </div>
+                                    <div class="wh-100 mt-3"></div>
+                                    <div class="col-auto">
+                                        <label for="exampleInputEmail1" class="form-label badge text-bg-primary">Naam</label>
+                                        <input id="new_student_name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    </div>
+                                    <div class="wh-100 mt-3"></div>
+                                    <div class="col-auto">
+                                        <label for="exampleInputEmail1" class="form-label badge text-bg-primary">Wachtwoord</label>
+                                        <input id="new_student_password" type="password" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                    </div>
+                                    <div class="wh-100 mt-3"></div>
+                                    <div class="col">
+                                        <label for="study_selector" class="form-label badge text-bg-primary">Studie</label>
+                                    </div>
+                                    <div id="new_student_studies_wrapper" class="col-auto">
+                                        <select class="form-select" onchange="this.parentElement.parentElement.insertAdjacentHTML('beforeend', `<div class='col-auto'>${all_classes_of_study_select_html_generator(this.value, '', 'generate_table_of_chosen_class(this)')}</div>`)">
+                                            <option>Kies een studie...</option>
+                                            {% for study in studies %}
+                                                <option value="{{ study.studyId }}">{{ study.studyId }} - {{ study.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col">
+                                        <button type="button" onclick="create_student(this)" class="btn btn-success">Maak student aan</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="teacher" role="tabpanel" aria-labelledby="teacher-tab">
+                                <div class="row row-cols-1 gy-2">
+                                    <div class="col-auto">
+                                        <label for="exampleInputEmail1" class="form-label badge text-bg-primary">E-mail</label>
+                                        <input id="new_teacher_email" type="email" class="form-control" aria-describedby="emailHelp">
+                                    </div>
+                                    <div class="wh-100"></div>
+                                    <div class="col-auto">
+                                        <label for="exampleInputEmail1" class="form-label badge text-bg-primary">Naam</label>
+                                        <input id="new_teacher_name" type="text" class="form-control" aria-describedby="emailHelp">
+                                    </div>
+                                    <div class="wh-100"></div>
+                                    <div class="col-auto">
+                                        <label for="exampleInputEmail1" class="form-label badge text-bg-primary">Wachtwoord</label>
+                                        <input id="new_teacher_password" type="password" class="form-control" aria-describedby="emailHelp">
+                                    </div>
+                                    <div class="wh-100"></div>
+                                    <div class="col-auto">
+                                        <span class="badge text-bg-primary">Admin</span>
+                                        <div class="form-check form-switch">
+                                            <input id="new_teacher_admin" class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" style="cursor: pointer;">
+                                        </div>
+                                    </div>
+                                    <div class="wh-100"></div>
+                                    <div class="col">
+                                        <hr>
+                                    </div>
+                                    <div class="col-auto">
+                                        <button onclick="create_teacher()" class="btn btn-success">Leraar toevoegen</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <div class="row row-cols-1 gy-2">
+                                <div class="col-auto">
+                                    <select id="new_class_study" class="form-select">
+                                        <option>Kies een studie...</option>
+                                        {% for study in studies %}
+                                            <option value="{{ study.studyId }}">{{ study.studyId }} - {{ study.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="wh-100"></div>
+                                <div class="col-6">
+                                    <h5>Studenten</h5>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">Naam</span>
+                                        <input id="search_student_field" type="text" class="form-control" placeholder="Zoek..." aria-label="Username" aria-describedby="basic-addon1">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <h5>Klas</h5>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1">Titel</span>
+                                        <input id="class_title_field" type="text" class="form-control" placeholder="1A" aria-label="Username" aria-describedby="basic-addon1">
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <ul id="students_list" class="list-group overflow-scroll" style="height:300px;">
+                                    </ul>
+                                </div>
+                                <div class="col-6">
+                                    <ul id="added_students_list" class="list-group">
+                                    </ul>
+                                </div>
+                            <div class="col">
+                                <button onclick="create_class()" class="btn btn-success">Maak aan</button>
+                            </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+    document.getElementById('navbar-nav-5').classList.add('nav-item-invisible');
+
+    const role = {{ role|tojson }}
+</script>
+<script src="{{ url_for('static', filename='js/manage_account.js') }}"></script>
+{% endblock %}

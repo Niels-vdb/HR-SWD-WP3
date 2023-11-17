@@ -1,0 +1,69 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="screen teacher-menu-screen">
+  <section class="teacher-menu-section">
+    <header class="welcome-header teacher-welcome-header">
+      <h1 id="greeting" class="student-general-welcome"></h1>
+      <h2 class="welcome welcome-techer-menu">Welkom {{ name }}</h2>
+    </header>
+    <div class="teacher-menu">
+      <ul class="list-group list-group-flush">
+        <a
+          href="{{ url_for('make_meeting_screen') }}"
+          class="list-group-item teacher-menu-item"
+          >Nieuwe bijeenkomst aanmaken</a
+        >
+        <a
+          href="{{ url_for('teacher_meeting_history') }}"
+          class="list-group-item teacher-menu-item"
+          >Oude bijeenkomsten bekijken</a
+        >
+        <a
+          href="{{ url_for('student_search') }}"
+          class="list-group-item teacher-menu-item"
+          >Leerlingen bekijken</a
+        >
+        {% if session["teacher_admin"] %}
+        <a
+          href="{{ url_for('manage_account') }}"
+          class="list-group-item teacher-menu-item"
+          >Leerlingen bijwerken en aanmaken</a
+        >
+        {% endif %}
+      </ul>
+    </div>
+  </section>
+
+  <section class="schedule-list schedule-list-teacher">
+    <div class="schedule-banner">
+      <h2 class="schedule-header">Agenda</h2>
+    </div>
+    <div id="teacher-schedule" class="fetch-container-schedule">
+      <!-- JS Fetch retrieves and loops through teachers meetings -->
+      <div class="schedule-block">
+        <h5 class="card-title placeholder-glow">
+          <span class="placeholder col-6"></span>
+        </h5>
+        <p class="card-text placeholder-glow">
+          <span class="placeholder col-7"></span>
+          <span class="placeholder col-4"></span>
+          <span class="placeholder col-4"></span>
+          <span class="placeholder col-6"></span>
+          <span class="placeholder col-8"></span>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- JS does not understand jinja if not in html file -->
+<script type="text/javascript">
+  teacherId = "{{ session['teacher_id'] }}";
+  beamerScreen = "{{ url_for('beamer_screen') }}";
+</script>
+
+<script
+  type="text/javascript"
+  src="{{ url_for('static', filename='js/teacherMenu.js') }}"
+></script>
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends 'base.html' %} {% block content %}
+<section class="screen beamer-screen" id="beamer-screen" onload="beamerScreenToggles()">
+  <div class="beamer-qr-section">
+    <h1 id="greeting" class="beamer-welcome"></h1>
+    <div class="qr-code"></div>
+    <img src="{{ kwarq.qr }}" alt="" class="beamer-qr" />
+    <h2 class="beamer-link">
+      http://192.168.180.160:80/student/{{kwarq.meeting_id}}
+    </h2>
+    <a
+      href="{{ url_for('teacher_menu') }}"
+      class="btn btn-success end-meeting-btn"
+      onclick="endMeeting('{{ kwarq.meeting_id }}')"
+      >Bijeenkomst afsluiten
+    </a>
+    <a
+      href="{{ url_for('teacher_menu') }}"
+      class="btn btn-secondary return-menu-btn"
+    >
+      Terug naar menu
+    </a>
+  </div>
+
+  <section class="schedule-list">
+    <div class="schedule-banner schedule-banner-beamer"></div>
+    <div class="beamer-toggle">
+      <div
+        onclick="presentToggle()"
+        class="btn btn-success toggle"
+        id="present-toggle"
+      >
+        <i class="bi bi-check-circle toggle-icon"></i>
+      </div>
+      <div
+        onclick="absentToggle()"
+        class="btn btn-warning toggle"
+        id="absent-toggle"
+      >
+        <i class="bi bi-hourglass-split toggle-icon"></i>
+      </div>
+      <div
+        onclick="calledOffToggle()"
+        class="btn btn-danger toggle"
+        id="called-off-toggle"
+      >
+        <i class="bi bi-x-circle toggle-icon"></i>
+      </div>
+      <div
+        onclick="messageListToggle()"
+        class="btn btn-light toggle"
+        id="called-off-toggle"
+      >
+        <i class="bi bi-chat-right-text toggle-icon"></i>
+      </div>
+    </div>
+
+    <!-- JS Fetch loops and displays present students -->
+    <section id="beamer-present-list">
+      <h2 class="beamer-student-list-heading">
+        Studenten aanwezig:&nbsp; <span id="students-present-counter"></span>
+      </h2>
+      <div class="students-present" id="student-present-box">
+        <!-- <p>
+          Studenten aanwezig: <span id="student-counter"></span>
+        </p> -->
+        <div id="present-students"></div>
+      </div>
+    </section>
+
+    <!-- JS Fetch loops and displays absent students -->
+    <section id="beamer-absent-list">
+      <h2 class="beamer-student-list-heading">
+        Studenten afwezig:&nbsp; <span id="students-absent-counter"></span>
+      </h2>
+      <div class="students-present"></div>
+      <div id="absent-students"></div>
+    </section>
+
+    <!-- JS Fetch loops and displays called off students -->
+    <section id="beamer-called-off-list">
+      <h2 class="beamer-student-list-heading">
+        Studenten afgemeld:&nbsp; <span id="students-called-off-counter"></span>
+      </h2>
+      <div class="students-present"></div>
+      <div id="called-off-students"></div>
+    </section>
+
+    <!-- JS fetch loops and displays replies  -->
+    <section id="beamer-messages-list">
+      <h2 class="beamer-student-list-heading">Studenten reacties</h2>
+      <div id="student-replies"></div>
+    </section>
+  </section>
+
+  <script
+    type="text/javascript"
+    src="{{ url_for('static', filename='js/beamerScreenAjax.js') }}"
+  ></script>
+  <script
+    type="text/javascript"
+    src="{{ url_for('static', filename='js/beamerScreen.js') }}"
+  ></script>
+</section>
+{% endblock %}

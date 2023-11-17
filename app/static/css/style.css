@@ -1,0 +1,881 @@
+/* General styles */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+*,
+*::before,
+*::after,
+p {
+  margin: 0;
+  /* border: 1px solid red; */
+}
+
+:root {
+  --color-primary: #fff7ea;
+  --color-secondary: #d20f4d;
+  --color-font: #011e48;
+}
+
+body {
+  background: #fff7ea;
+  font-family: Poppins, sans-serif;
+  font-size: 16px;
+  line-height: 1.625;
+  font-weight: 400;
+  font-style: normal;
+  min-width: 320px;
+  color: var(--color-font);
+}
+
+.screen {
+  height: 90vh;
+}
+
+a,
+a:hover {
+  text-decoration: none;
+  color: #011e48;
+}
+
+.return-menu-btn {
+  width: 249px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  font-size: 24px;
+}
+
+strong {
+  color: var(--color-secondary);
+}
+
+.strong-normal {
+  color: unset;
+}
+
+/* Navbar */
+nav {
+  height: 75px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.nav-img {
+  height: 65px;
+}
+
+.nav-items {
+  margin-left: 100px;
+}
+
+.nav-item-invisible {
+  display: none;
+}
+
+.logoff-btn {
+  padding: 7px;
+  background-color: var(--color-secondary);
+  border-radius: 15%;
+  color: white;
+}
+
+@media screen and (max-width: 425px) {
+  nav {
+    height: 85px;
+  }
+
+  .nav-img {
+    height: 75px;
+  }
+}
+
+@media screen and (min-width: 2000px) {
+  nav {
+    height: 185px;
+  }
+
+  .nav-img {
+    height: 175px;
+  }
+}
+
+/* Alert box */
+.bs-alert {
+  width: 90%;
+}
+
+.bs-alert-short {
+  width: 50%;
+}
+
+@media screen and (max-width: 768px) {
+  .bs-alert-short {
+    width: 95%;
+  }
+}
+
+.bs-alert, .bs-alert-short {
+  position: absolute;
+}
+
+/* Login page */
+.login-screen {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+}
+
+.loging-header {
+  text-align: center;
+  margin-bottom: 140px;
+  margin-top: 90px;
+}
+
+.login-form {
+  align-self: center;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-input {
+  width: 400px;
+  background-color: #fff7ea;
+  border: 0;
+  border-bottom: 2px solid;
+  box-shadow: none;
+  border-radius: 0;
+  margin-bottom: 30px;
+  padding: 5px 0;
+  font-size: 1.2rem;
+}
+
+.login-input:focus {
+  outline: none;
+}
+
+.login-btn-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-btn {
+  width: 400px;
+  transition: 300ms cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  transition-property: color, background-color;
+  background-color: #d30f4c;
+}
+
+.forgot-password-btn {
+  margin-top: 10px;
+  color: var(--color-font);
+  padding-left: 0;
+}
+
+.forgot-password-btn:hover {
+  color: var(--color-secondary);
+}
+
+@media screen and (max-width: 450px) {
+  .loging-header {
+    font-size: 44px;
+    margin-bottom: 100px;
+  }
+}
+
+/* Schedule object */
+.schedule-list {
+  background: white;
+  height: 100%;
+  width: 400px;
+  overflow: scroll;
+  border-radius: 15px;
+}
+
+.schedule-banner {
+  height: 65px;
+  width: 100%;
+  background: var(--color-secondary);
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.schedule-banner-beamer {
+  margin-bottom: 0;
+}
+
+.schedule-header {
+  padding-left: 5px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  font-size: 28px;
+}
+
+.schedule-block,
+.schedule-block-student {
+  height: auto;
+  width: 95%;
+  border: 0.5px solid black;
+  border-radius: 15px;
+  margin: 10px;
+  padding: 5px;
+}
+
+
+@media screen and (max-width: 450px) {
+  .schedule-list {
+    margin-top: 50px;
+    overflow: visible;
+    height: auto;
+    margin-bottom: 5px;
+  }
+
+  .schedule-header {
+    margin: 5px;
+  }
+}
+
+@media screen and (min-width: 2000px) {
+  .schedule-list {
+    width: 650px;
+    margin-bottom: 5px;
+  }
+}
+
+/* Teacher schedule */
+.teacher-schedule-block {
+  display: flex;
+  align-items: center;
+  height: auto;
+  margin: 5px;
+}
+
+.schedule-block-header-techer-menu {
+  width: 170%;
+}
+
+.classes-and-students {
+  overflow: hidden;
+}
+
+.schedule-cancel-btn:hover,
+.teacher-begin-meeting:hover,
+.teacher-delete-meeting:hover,
+.teacher-cancel-meeting:hover {
+  color: var(--color-secondary);
+  cursor: pointer;
+}
+
+.teacher-begin-meeting {
+  width: 220px;
+}
+
+.schedule-block-info-teacher {
+  height: auto;
+}
+
+.teacher-cancel-meeting,
+.teacher-delete-meeting {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.teacher-meeting-btns {
+  width: 100%;
+
+}
+
+.teacher-cancel-meeting,
+.teacher-delete-meeting {
+  font-size: 15px;
+  margin-left: 20px;
+}
+
+/* Beamer schedule */
+.beamer-toggle {
+  width: 100%;
+  height: 40px;
+  margin-bottom: 10px;
+  display: flex;
+}
+
+.toggle {
+  height: 100%;
+  width: 33.33%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0;
+}
+
+.toggle-icon {
+  font-size: 24px;
+  color: black;
+}
+
+.schedule-block-beamer {
+  height: auto;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.schedule-block-student-name {
+  width: 87%;
+  display: flex;
+  gap: 10px;
+}
+
+.schedule-block-beamer-present {
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  align-items: center;
+}
+
+.toggle-icon-present-called-off:hover {
+  color: #dc3545;
+  cursor: pointer;
+}
+
+.toggle-icon-present-absent:hover {
+  color: #ffc107;
+  cursor: pointer;
+}
+
+.schedule-block-header {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  align-items: center;
+  gap: 20px;
+  padding-left: 15px;
+  font-size: 40px;
+}
+
+.beamer-student-list-heading {
+  display: flex;
+  padding: 5px;
+  width: 100%;
+}
+
+.schedule-block-beamer-replies {
+  height: fit-content;
+}
+
+.student-reply {
+  width: 100%;
+}
+
+@media screen and (max-width: 2000px) {
+  .schedule-block-header {
+    font-size: 20px;
+    gap: 10px;
+  }
+}
+
+@media screen and (min-width: 2000px) {
+  .beamer-toggle {
+    height: 70px;
+  }
+
+  .toggle-icon {
+    font-size: 44px;
+    color: black;
+  }
+}
+
+/* Student schedule */
+.student-schedule-block {
+  display: flex;
+  justify-content: space-around;
+}
+
+.schedule-block-student:hover {
+  color: black;
+}
+
+.fetch-container-schedule {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.absent-toggle {
+  display: flex;
+  align-items: center;
+}
+
+.absent-toggle p {
+  font-size: 12px;
+  margin-left: 7px;
+}
+
+/* Create meeting schedule */
+.create-meeting-question {
+  width: 100%;
+  height: 100px;
+  border-radius: 15px;
+}
+
+.make-meeting-btn {
+  width: 100%;
+}
+
+/* Student screen */
+.student-screen {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.welcome-student {
+  padding-top: 30px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.welcome-header {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.student-general-welcome {
+  font-size: 54px;
+}
+
+.welcome {
+  font-size: 30px;
+}
+
+.meeting-info-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 15px;
+}
+
+.question-for-student {
+  font-size: 18px;
+}
+
+.student-response-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.student-response {
+  border-radius: 15px;
+  width: 100%;
+  height: 200px;
+  padding: 10px;
+  outline: none;
+}
+
+@media screen and (max-width: 450px) {
+  .student-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100vw;
+    height: 200vw;
+  }
+
+  .welcome-header {
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+
+  .student-general-welcome {
+    font-size: 44px;
+  }
+
+  .welcome-student {
+    width: 95%;
+    gap: 8px;
+  }
+
+  .welcome {
+    font-size: 20px;
+  }
+
+  .student-response {
+    border-radius: 15px;
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    outline: none;
+  }
+}
+
+@media screen and (min-width: 450px) and (max-width: 768px) {
+  .screen {
+    height: 87vh;
+  }
+
+  .welcome-student {
+    gap: 8px;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+  }
+
+  .student-general-welcome {
+    font-size: 40px;
+  }
+
+  .welcome {
+    font-size: 24px;
+  }
+
+  .meeting-info-list {
+    margin-top: 5px;
+  }
+}
+
+/* Beamer screen */
+.beamer-screen {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.beamer-qr-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.beamer-welcome {
+  font-size: 136px;
+  margin-top: 100px;
+  margin-bottom: 70px;
+  font-weight: 500;
+}
+
+.beamer-qr {
+  width: 750px;
+}
+
+.beamer-link {
+  margin-top: 30px;
+  font-size: 50px;
+}
+
+.end-meeting-btn {
+  margin-top: 40px;
+  padding: 10px;
+  font-size: 24px;
+}
+
+.student-name {
+  font-size: 40px;
+}
+
+@media screen and (max-width: 768px) {
+  .beamer-screen {
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+  }
+
+  .beamer-welcome {
+    margin-top: 0;
+  }
+
+  .end-meeting-btn {
+    margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 2000px) {
+  .beamer-welcome {
+    font-size: 46px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .beamer-qr {
+    width: 375px;
+  }
+
+  .beamer-link {
+    margin-top: 10px;
+    font-size: 20px;
+  }
+
+  .student-name {
+    font-size: 20px;
+  }
+}
+
+/* Teacher menu */
+
+.teacher-menu-screen {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.teacher-welcome-header {
+  margin-top: 80px;
+}
+
+.teacher-menu {
+  margin-top: 70px;
+}
+
+.teacher-menu-item {
+  height: 75px;
+  width: 350px;
+  display: flex;
+  align-items: center;
+}
+
+.teacher-menu-item:hover {
+  background-color: #d20f4d;
+  color: white;
+}
+
+@media screen and (max-width: 768px) {
+  .teacher-menu-screen {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .teacher-menu {
+    display: none;
+  }
+}
+
+/* Create meeting screen */
+.make-meeting-screen {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.make-meeting-screen-heading {
+  margin-bottom: 10px;
+}
+
+.meeting-selections {
+  width: fit-content;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.class-student-container {
+  display: flex;
+  width: 800px;
+  height: 400px;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.66);
+  padding: 20px;
+  gap: 20px;
+  align-items: center;
+  margin-top: 150px;
+}
+
+.class-student-list {
+  width: 400px;
+  overflow: scroll;
+  height: 100%;
+}
+
+.class-student-list-header {
+  color: white;
+  background-color: var(--color-secondary);
+  text-align: center;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+}
+
+.student-list-search {
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.student-list-group {
+  border: none;
+}
+
+.student-list-item {
+  border: none;
+  border-bottom: 0.2px solid grey;
+}
+
+.vakken {
+  padding: 15px;
+  margin: 50px;
+}
+
+.buttonlookup {
+  color: #d20f4d;
+}
+
+.Info {
+  padding: 20px;
+  margin: 50px;
+  background-color: #d20f4d;
+  color: white;
+  border: 5px white;
+  text-overline-color: white;
+  width: 1000px;
+  height: 400px;
+  font-size: 20px;
+  border-radius: 25px;
+}
+
+.absentbuttons {
+  padding: 15px;
+  margin: 50px;
+}
+
+.field {
+  background-color: white;
+  height: 250px;
+  width: 600px;
+  border: 2px outset black;
+  table-layout: fixed;
+  border-radius: 20px;
+}
+
+.absentiestudent {
+  background-color: #d20f4d;
+  color: white;
+}
+
+/*.form-control {*/
+/*    width: 300px;*/
+/*    height: 300px;*/
+/*    margin: 30px;*/
+/*    padding: 10px;*/
+/*    position: center;*/
+/*    border-radius: 10px;*/
+/*    border: 1px solid black;*/
+/*}*/
+
+.form-control2 {
+  margin-left: auto;
+  margin-right: 0;
+  width: 500px;
+  height: 400px;
+}
+
+.title {
+  background-color: #d20f4d;
+  color: white;
+}
+
+.klastitle {
+  background-color: #d20f4d;
+  color: white;
+  border-radius: 1px;
+  height: 30px;
+  width: 70px;
+  border-radius: 5px;
+  margin: 30px;
+}
+
+.docenttitle {
+  background-color: #d20f4d;
+  color: white;
+  border-radius: 1px;
+  height: 30px;
+  width: 130px;
+  border-radius: 5px;
+  margin: 30px;
+}
+
+.studenttitle3 {
+  background-color: #d20f4d;
+  color: white;
+  border-radius: 1px;
+  height: 30px;
+  width: 140px;
+  border-radius: 5px;
+  margin: 30px;
+}
+
+.information {
+  padding: 30px;
+  margin: 40px;
+}
+
+.vakken {
+  padding: 15px;
+  margin: 50px;
+}
+
+.temp-list-item:hover {
+    cursor: pointer;
+    color: white;
+    background-color: #0d6efd;
+}
+
+.temp-remove-item:hover {
+    cursor: pointer;
+    color: white;
+    background-color: #dc3545;
+}
+
+.is-hidden {
+  display: none;
+}
+
+.table-light {
+  scroll-margin-left: revert;
+}
+
+.lijstcss {
+  scroll-behavior: smooth;
+  background-color: white;
+  table-layout: fixed;
+  overflow: scroll;
+  height: 200px;
+  display: block;
+  color: black;
+  mso-table-rspace: 40px;
+}
+
+#resultaten {
+  scroll-behavior: smooth;
+  background-color: white;
+  table-layout: initial;
+  overflow: scroll;
+  height: 200px;
+  display: block;
+  color: black;
+  mso-table-rspace: 40px;
+
+}
+
+
+#myChart {
+  position: absolute !important;
+  right: 300px;
+  max-width: 700px;
+  display: grid;
+
+}

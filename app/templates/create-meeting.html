@@ -1,0 +1,146 @@
+{% extends 'base.html' %} {% block content %}
+<section class="screen make-meeting-screen">
+  <section class="meeting-selections">
+    <div class="class-student-container">
+      <div class="class-student-list class-options">
+        <div class="class-student-list-header">
+          <h2 class="class-student-list-heading">Klassen</h2>
+        </div>
+
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+          {% for study, class_list in kwarq.studies %}
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingOne">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#flush-{{ study }}"
+                aria-expanded="false"
+                aria-controls="flush-{{ study }}"
+              >
+                <strong>{{ study }}</strong>
+              </button>
+            </h2>
+            <div
+              id="flush-{{ study }}"
+              class="accordion-collapse collapse"
+              aria-labelledby="flush-headingOne"
+              data-bs-parent="#accordionFlushExample"
+            >
+              <div class="accordion-body">
+                <ul class="list-group">
+                  {% for class in class_list %}
+                  <li class="list-group-item">
+                    <input
+                      class="form-check-input me-1"
+                      type="checkbox"
+                      value="{{ class.classId }}"
+                      id="class-{{ class.classId }}"
+                      name="class-in-meeting"
+                      onclick="checkClickClass('{{ class.classId }}')"
+                    />
+                    <label class="form-check-label" for="{{ class.classId }}"
+                      >{{ class.name }}
+                    </label>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="class-student-list student-options">
+        <div class="class-student-list-header">
+          <h2 class="class-student-list-heading">Studenten</h2>
+        </div>
+        <div class="student-list-search">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Zoek op naam of studentnummer"
+            aria-label="Search"
+            onkeyup="liveSearch(this.value)"
+          />
+          <button class="btn btn-outline-success" type="submit">
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
+        <ul id="list_of_students" class="list-group student-list-group">
+          <!-- livesearch adds students here -->
+        </ul>
+      </div>
+    </div>
+
+    <a
+      href="{{ url_for('teacher_menu') }}"
+      class="btn btn-secondary return-menu-btn"
+    >
+      Terug naar menu
+    </a>
+  </section>
+
+  <section class="schedule-list">
+    <form method="POST" id="create-meeting-form">
+      <div class="schedule-banner">
+        <h2 class="schedule-header">Samenstelling bijeenkomst</h2>
+      </div>
+
+      <label for="courses">Kies een <strong>vak</strong>:</label>
+      <select id="courses" name="course">
+        <option value="">-------</option>
+        {% for course in kwarq.courses %}
+        <option value="{{ course.courseId }}">{{ course.name }}</option>
+        {% endfor %}
+      </select>
+
+      <br />
+
+      <label for="meeting-time">Kies een <strong>datum</strong>:</label>
+      <input type="date" name="meeting-date" id="meeting-date" />
+      <br />
+
+      <label for="meeting-date">Kies een <strong>tijd</strong>:</label>
+      <input type="time" name="meeting-time" step="60" id="meeting-time" />
+      <br />
+
+      <p>Vul een eventuele <strong>vraag</strong> in</p>
+      <textarea
+        name="meeting-question"
+        class="create-meeting-question"
+        id="create-meeting-question"
+        cols="30"
+        rows="10"
+      ></textarea>
+      <!-- JS Fetch loops through selected students and classes -->
+      <!-- DOES NOT CHECK IF UNCHECKED YET BUGGED!!!!!!! -->
+      <div id="students-in-planning"></div>
+      <div id="classes-in-planning"></div>
+
+      <input
+        type="submit"
+        class="btn btn-success make-meeting-btn"
+        value="Bijeenkomst aanmaken"
+      />
+    </form>
+  </section>
+</section>
+<!-- JS does not understand jinja if not in html file -->
+<script type="text/javascript">
+  teacherId = "{{ session['teacher_id'] }}";
+</script>
+
+<script
+  type="text/javascript"
+  src="{{ url_for('static', filename='js/createMeeting.js') }}"
+></script>
+
+<script
+  type="text/javascript"
+  src="{{ url_for('static', filename='js/liveSearch.js') }}"
+></script>
+
+{% endblock %}

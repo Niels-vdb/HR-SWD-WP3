@@ -1,0 +1,151 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="screen student-screen">
+  <div class="welcome-student">
+    <header class="welcome-header">
+      <h1 id="greeting" class="student-general-welcome"></h1>
+      <h2 class="student-welcome">Welkom {{ kwarq.name }}</h2>
+    </header>
+    {% if kwarq.current_meeting_info != {} %}
+    <section class="meeting-info">
+      <p>Je bent <strong>succesvol</strong> ingecheckt bij de bijeenkomst!</p>
+      <ul class="meeting-info-list">
+        <li class="meeting-info-item">
+          Bijeenkomst: <strong>{{ kwarq.current_meeting_info.course }}</strong>
+        </li>
+        <li class="meeting-info-item">
+          Docent: <strong>{{ kwarq.current_meeting_info.teacher }}</strong>
+        </li>
+      </ul>
+    </section>
+
+    <section class="student-message">
+      <h2 class="question-for-student">
+        <strong
+          >{{ kwarq.current_meeting_info.current_meeting.question }}</strong
+        >
+      </h2>
+      <form
+        action="/student-response/{{ kwarq.current_meeting_info.current_meeting.meetingId }}"
+        method="POST"
+        class="student-response-form"
+      >
+        <textarea
+          name="student-response"
+          class="student-response"
+          placeholder="Antwoord geven is optioneel"
+        ></textarea>
+        <button type="submit" class="btn btn-success">Stuur op!</button>
+      </form>
+    </section>
+  </div>
+  {% endif %}
+
+  <section class="schedule-list">
+    <div class="schedule-banner">
+      <h2 class="schedule-header">Aankomende lessen</h2>
+    </div>
+    <div id="student-schedule" class="fetch-container-schedule">
+      <!-- JS Fetch loops through api to fetch current schedule -->
+      <div class="schedule-block placeholder-schedule-block">
+        <h5 class="card-title placeholder-glow">
+          <span class="placeholder col-6"></span>
+        </h5>
+        <p class="card-text placeholder-glow">
+          <span class="placeholder col-7"></span>
+          <span class="placeholder col-4"></span>
+          <span class="placeholder col-4"></span>
+          <span class="placeholder col-6"></span>
+          <span class="placeholder col-8"></span>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script type="text/javascript">
+  studentId = "{{session['student_id']}}";
+  const monthNames = [
+    "januari",
+    "februari",
+    "maart",
+    "april",
+    "mei",
+    "juni",
+    "juli",
+    "augustus",
+    "september",
+    "oktober",
+    "november",
+    "december",
+  ];
+
+  const fetch_student_meetings = () => {
+    fetch(`/students/${studentId}`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        let studentSchedule = document.getElementById("student-schedule");
+        studentSchedule.replaceChildren();
+        if (data.all_meetings["meetings_planned"].length == 0) {
+          studentSchedule.insertAdjacentHTML('beforeend', '<p>Geen bijeenkomsten ingepland</p>');
+        }
+        data.all_meetings["meetings_planned"].forEach((meeting) => {
+          let date = new Date(Date.parse(meeting.date));
+          let time = meeting.time;
+          let hour = time.split(":")[0];
+          let minute = time.split(":")[1];
+          let timeFormated = `${hour}:${minute}`;
+
+          const markup = `
+              <div class="schedule-block schedule-block-student">
+      
+                <div class="schedule-block-header">
+                  <i class="bi bi-calendar-check"></i>
+                  <p class="meeting-name">${meeting.course}</p>
+                </div>
+
+                <div class="student-schedule-block">    
+                  <div class="schedule-block-info">
+                  <p>Docent: ${meeting.teacher}</p>
+                  <p>Datum: ${date.getDate()} ${
+            monthNames[date.getMonth()]
+          } ${date.getFullYear()}</p>
+                  <p>Tijd: ${timeFormated}</p>
+                </div>
+                  
+                  <form 
+                    action="/student-call-off-meeting/${meeting.meeting_id}" 
+                    method="POST" 
+                    class="schedule-cancel-btn"
+                    onclick="student_call_off('${meeting.meeting_id}')">
+                    <div class="absent-toggle">
+                      <i class="bi bi-x-circle"></i>
+                      <p>Afwezig melden</p>
+                    </div>
+                  </form>
+                </div>
+
+              </div>
+        `;
+
+          studentSchedule.insertAdjacentHTML("beforeend", markup);
+        });
+      });
+  };
+
+  let refresh = setInterval(fetch_student_meetings, 1000);
+</script>
+
+<script type="text/javascript">
+  invinsilbleNav();
+
+  function student_call_off(meeting_id) {
+    const myRequest = new XMLHttpRequest();
+    myRequest.open("POST", `/student-call-off-meeting/${meeting_id}`, true);
+    myRequest.send();
+  }
+</script>
+
+{% endblock %}

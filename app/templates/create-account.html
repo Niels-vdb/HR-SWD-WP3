@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="pt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1 class="m-0">Persoonsinformatie</h1>
+            </div>
+            <div class="col-auto">
+                <div class="input-group">
+                    <span class="input-group-text" id="basic-addon1">Studentnummer: </span>
+                    <input id="student_number_field" type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                    <button class="btn btn-outline-primary" onclick="set_ui_for_user_information()">Haal informatie op <i class="bi bi-rocket-takeoff-fill"></i></button>
+                </div>
+            </div>
+        </div>
+        <hr/>
+        {% if role == "admin" %}
+            <form action="{{ url_for('manage_account') }}" method="POST">
+                <div id="person_information_wrapper" style="display: none">
+                    <div class="row mb-1">
+                        <div class="col">
+                            <span class="badge bg-primary">Studentnummer</span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col">
+                            <span id="student_number_text">number</span>
+                             <input type="hidden" id="studentId" name="studentId" value="">
+                        </div>
+                    </div>
+                    <div class="row mb-1">
+                        <div class="col">
+                            <span class="badge bg-primary">Naam</span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-2">
+                            <input id="name_text" name="name" type="text" class="form-control" aria-label="Naam">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-auto">
+                            <span class="badge bg-info">Laatst ingecheckt</span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-auto">
+                            <span id="last_check-in_text">Nog nooit ingecheckt</span>
+                        </div>
+                    </div>
+                    <div class="row row-cols-1 gy-1 mb-3" id="studies_wrapper">
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-auto">
+                            <button class="btn btn-outline-success">Opslaan <i class="bi bi-check2"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        {% else %}
+            <div id="person_information_wrapper" style="display: none;">
+            <div class="row">
+                <div class="col">
+                    <span class="badge bg-primary">Studentnummer</span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <span id="student_number_text">number</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <span class="badge bg-primary">Naam</span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <span id="name_text">name</span>
+                </div>
+            </div>
+            <div class="row mb">
+                <div class="col-auto">
+                    <span class="badge bg-info">Laatst ingecheckt</span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-auto">
+                    <span id="last_check-in_text">Nog nooit ingecheckt</span>
+                </div>
+            </div>
+            <div class="row row-cols-1 gy-1" id="studies_wrapper">
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+<script type="text/javascript">
+    const role = {{ role|tojson }}
+</script>
+<script src="{{ url_for('static', filename='js/manage_account.js') }}"></script>
+{% endblock %}

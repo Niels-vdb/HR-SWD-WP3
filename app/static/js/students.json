@@ -1,0 +1,23 @@
+[
+  {
+    "Naam": "Jordy Arjun Sharma",
+    "Studentennummer": "1026689",
+    "Opleiding": "Software Development",
+    "Instituut": "RAC, VJ"
+  },
+
+  {
+    "Naam": "Lars De Wit",
+    "Studentennummer": "1038063",
+    "Opleiding": "Software Development",
+    "Instituut": "RAC, LW"
+  },
+
+  {
+    "Naam": "Niels van den Bosch",
+    "Studentennummer": "1060880",
+    "Opleiding": "Software Development",
+    "Instituut": "RAC, NVDB"
+  }
+
+]

@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="pt-3 pb-5">
+    <div class="container">
+    {% if meeting_info %}
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item text-primary text-underline"><a href="{{ url_for('teacher_meeting_history') }}">Meetings</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Meeting: {{ meeting_info.meeting_id }}</li>
+          </ol>
+        </nav>
+    {% endif %}
+        <div class="row">
+            <div class="col">
+                {% if meetings %}
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Meeting ID</th>
+                                <th scope="col">Datum en tijd</th>
+                                <th scope="col">Meer info</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for meeting in meetings %}
+                                <tr>
+                                    <td>{{ meeting.meetingId }}</td>
+                                    <td>{{ meeting.dateAndTime }}</td>
+                                    <td><a href="/teacher_meeting_history/{{ meeting.meetingId }}" class="btn btn-outline-primary"><i class="bi bi-info-lg"></i></a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% elif meeting_info %}
+<div class="row row-cols-1 gy-3">
+                        <div class="col">
+                            <div class="row row-cols-1">
+                                <div class="col">
+                                    <h3><span class="badge bg-primary">Vraag:</span> {{ meeting_info.question }}</h3>
+                                </div>
+                                <div class="col pt-1 pb-1 overflow-scroll bg-white rounded" style="height: 300px;">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Naam</th>
+                                                <th scope="col">Antwoord</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for student in meeting_info.student_replies %}
+                                                <tr>
+                                                    <td>{{ student.student_name }}</td>
+                                                    <td>{{ student.reply }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-9">
+                            <div class="row row-cols-1">
+                                <div class="col overflow-scroll" style="height: 350px;">
+                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                      <li class="nav-item" role="presentation">
+                                        <button class="nav-link text-success active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Aanwezig</button>
+                                      </li>
+                                      <li class="nav-item" role="presentation">
+                                        <button class="nav-link text-danger" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Afwezig</button>
+                                      </li>
+                                      <li class="nav-item" role="presentation">
+                                        <button class="nav-link text-secondary" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Afgemeld</button>
+                                      </li>
+                                    </ul>
+                                    <div class="tab-content p-3 bg-white border border-top-0 rounded-bottom " id="myTabContent">
+                                      <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                                        <table class="table table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Student ID</th>
+                                                    <th scope="col">Naam</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for student in meeting_info.students_present %}
+                                                    <tr>
+                                                        <td>{{ student.student_id }}</td>
+                                                        <td>{{ student.name }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                      </div>
+                                      <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                                        <table class="table table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Student ID</th>
+                                                    <th scope="col">Naam</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for student in meeting_info.students_absent %}
+                                                    <tr>
+                                                        <td>{{ student.student_id }}</td>
+                                                        <td>{{ student.name }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                      </div>
+                                      <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+                                        <table class="table table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Student ID</th>
+                                                    <th scope="col">Naam</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for student in meeting_info.students_called_off %}
+                                                    <tr>
+                                                        <td>{{ student.student_id }}</td>
+                                                        <td>{{ student.name }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <h3>Verwacht: {{ meeting_info.students_scheduled | length }}</h3>
+                            <canvas id="myChart"></canvas>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="col">
+                        <h3>Nog geen meetings gehad!</h3>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
+<script>
+    document.getElementById('navbar-nav-3').classList.add('nav-item-invisible');
+
+    var yValues = [
+        {{ meeting_info.students_present | length }},
+        {{ meeting_info.students_absent | length }},
+        {{ meeting_info.students_called_off | length }}
+    ];
+</script>
+<script src="{{ url_for('static', filename='js/teacher_meeting_history.js') }}"></script>
+
+{% endblock %}
